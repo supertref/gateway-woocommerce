@@ -191,7 +191,7 @@ function NBR__plugins_loaded__load_Karbo_gateway()
             $payment_instructions = '
 <table class="krbwc-payment-instructions-table" id="krbwc-payment-instructions-table">
   <tr class="bpit-table-row">
-    <td colspan="2">' . __('Please send your Karbo payment as follows:', 'woocommerce') . '</td>
+    <td colspan="2">' . __('Please send your Imkoin payment as follows:', 'woocommerce') . '</td>
   </tr>
   <tr class="bpit-table-row">
     <td style="vertical-align:middle;" class="bpit-td-name bpit-td-name-amount">
@@ -237,7 +237,7 @@ function NBR__plugins_loaded__load_Karbo_gateway()
 
             $payment_instructions_description = '
 						  <p class="description" style="width:50%;float:left;width:49%;">
-					    	' . __('Specific instructions given to the customer to complete Karbos payment.<br />You may change it, but make sure these tags will be present: <b>{{{KRBCOINS_AMOUNT}}}</b>, <b>{{{KRBCOINS_PAYMENTID}}}</b>, <b>{{{KRBCOINS_ADDRESS}}}</b> and <b>{{{EXTRA_INSTRUCTIONS}}}</b> as these tags will be replaced with customer - specific payment details.', 'woocommerce') . '
+					    	' . __('Specific instructions given to the customer to complete Imkoin payment.<br />You may change it, but make sure these tags will be present: <b>{{{KRBCOINS_AMOUNT}}}</b>, <b>{{{KRBCOINS_PAYMENTID}}}</b>, <b>{{{KRBCOINS_ADDRESS}}}</b> and <b>{{{EXTRA_INSTRUCTIONS}}}</b> as these tags will be replaced with customer - specific payment details.', 'woocommerce') . '
 						  </p>
 						  <p class="description" style="width:50%;float:left;width:49%;">
 					    	Payment Instructions, original template (for reference):<br />
@@ -251,14 +251,14 @@ function NBR__plugins_loaded__load_Karbo_gateway()
                 'enabled' => array(
                                 'title' => __('Enable/Disable', 'woocommerce'),
                                 'type' => 'checkbox',
-                                'label' => __('Enable Karbo', 'woocommerce'),
+                                'label' => __('Enable Imkoin', 'woocommerce'),
                                 'default' => 'yes'
                             ),
                 'title' => array(
                                 'title' => __('Title', 'woocommerce'),
                                 'type' => 'text',
                                 'description' => __('This controls the title which the user sees during checkout.', 'woocommerce'),
-                                'default' => __('Karbo Payment', 'woocommerce')
+                                'default' => __('Imkoin Payment', 'woocommerce')
                             ),
 
                 'Karbo_addr_merchant' => array(
@@ -365,7 +365,7 @@ function NBR__plugins_loaded__load_Karbo_gateway()
             $exchange_rate = NBR__get_exchange_rate_per_Karbo(get_woocommerce_currency(), 'getfirst');
             /// $exchange_rate = NBR__get_exchange_rate_per_Karbo (get_woocommerce_currency(), $this->exchange_rate_retrieval_method, $this->exchange_rate_type);
             if (!$exchange_rate) {
-                $msg = 'ERROR: Cannot determine Karbo exchange rate. Possible issues: store server does not allow outgoing connections, exchange rate servers are blocking incoming connections or down. ' .
+                $msg = 'ERROR: Cannot determine Imkoin exchange rate. Possible issues: store server does not allow outgoing connections, exchange rate servers are blocking incoming connections or down. ' .
                        'You may avoid that by setting store currency directly to Karbo(KRB)';
                 NBR__log_event(__FILE__, __LINE__, $msg);
                 exit('<h2 style="color:red;">' . $msg . '</h2>');
@@ -521,7 +521,7 @@ function NBR__plugins_loaded__load_Karbo_gateway()
                     $this->instructions_multi_payment_str,
                     $instructions
                     );
-            $order->add_order_note(__("Order instructions: price: {$order_total_in_krb} KRB, incoming account: {$Karbos_address} payment id: {$Karbos_payment_id}", 'woocommerce'));
+            $order->add_order_note(__("Order instructions: price: {$order_total_in_krb} Imkoin, incoming account: {$Karbos_address} payment id: {$Karbos_payment_id}", 'woocommerce'));
 
             echo wpautop(wptexturize($instructions));
         }
@@ -627,7 +627,7 @@ function NBR__plugins_loaded__load_Karbo_gateway()
     //=======================================================================
     function NBR__add_krb_currency($currencies)
     {
-        $currencies['KRB'] = __('Karbo', 'woocommerce');
+        $currencies['KRB'] = __('Imkoin', 'woocommerce');
         return $currencies;
     }
     //=======================================================================
@@ -677,7 +677,7 @@ function NBR__process_payment_completed_for_order($order_id, $Karbos_paid=false)
         $krbwc_settings = NBR__get_settings();
         if ($krbwc_settings['autocomplete_paid_orders']) {
             // Ensure order is completed.
-            $order->update_status('completed', __('Order marked as completed according to Karbo plugin settings', 'woocommerce'));
+            $order->update_status('completed', __('Order marked as completed according to Imkoin plugin settings', 'woocommerce'));
         }
 
         // Notify admin about payment processed
@@ -691,7 +691,7 @@ function NBR__process_payment_completed_for_order($order_id, $Karbos_paid=false)
                 $email,
                 $email,
                 "Full payment received for order ID: '{$order_id}'",
-                "Order ID: '{$order_id}' paid in full. <br />Received KRB: '$Karbos_paid'.<br />Please process and complete order for customer."
+                "Order ID: '{$order_id}' paid in full. <br />Received Imkoin: '$Karbos_paid'.<br />Please process and complete order for customer."
                 );
         }
     }
